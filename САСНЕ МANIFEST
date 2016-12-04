@@ -1,0 +1,39 @@
+САСНЕ МANIFEST
+САСНЕ:
+файлы jQuery MoЬile
+jquery. js
+jquery. moЬile. j s
+#
+jquery.moЫle.css
+images/ajax-loader.png
+images/icons-18-Ьlack.png
+images/icons-18-white.png
+images/icons-36-Ьlack.png
+images/icons-36-white.png
+# НТМL-документы
+# index.html всегда кэшируется
+feedЬack.html
+# Наши сценарии
+index. js
+index.css
+СSS
+# Наl!М изображения
+logo.png
+sponsors.png
+background.png
+# Нам не нужно КЭl!Мровать пиктограммы iOS
+# т. к. платформа КЭl!Мрует их сама
+и значок запуска,
+NETWORК:
+#
+#
+#
+Мы будем выходить в сеть только для получения JSОN-файла и
+результатов сценария,
+Замените
+обрабатывающего форму обратной связи.
+mobilexweb.com
+на
+свой домен
+http://mobilexweb.com/jqmЬook/sessions.json
+http://mobilexweb.com/jqmЬook/feedЬack.php
