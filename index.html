@@ -3,20 +3,89 @@
 	<head>
 		<meta charset="utf-8" />
 		<title>PINOK</title>
-		<meta name="viewport" content="width=device-width,user-scale=no">
-		<link rel="stylesheet" href="jquery.moЫle-1.0.css" />
-		<link rel="stylesheet" href="index.css" />
-		<script src="jquery.js"></script>
-		<script src="index.js"></script>
-		<script src="jquery.moЬile-1.0.js"></script>
-		<meta name="apple-moЬile-web-app-capaЫe" content="yes">
-		<meta name="apple-moЬile-web-app-status-bar-style" content="Ыack">
-		<link rel="apple-touch-icon" sizes="BOxBO" href="icons/iconBO.png">
+		<meta name="viewport" content="width=device-width,user-scalable=no">
+		<link rel="stylesheet" href="css/jquery.mobile-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.theme-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.structure-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.inline-svg-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.inline-png-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.icons-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/jquery.mobile.external-png-1.4.5.min.css" />
+		<link rel="stylesheet" href="css/style.css" />
+		<script src="js/jquery-2.1.0.min.js"></script>
+		<script src="js/jquery.mobile-1.4.5.min.js"></script>
+		<script src="js/script.js"></script>
+		<meta name="apple-moЬile-web-app-capable" content="yes">
+		<meta name="apple-moЬile-web-app-status-bar-style" content="back">
+		<link rel="apple-touch-icon" sizes="8Ox8O" href="icons/icon8O.png">
 		<link rel="apple-touch-icon" href="images/icon57.png" sizes="57x57">
 		<link rel="apple-touch-icon" href="images/icon114.png" sizes="114x114">
 		<link rel="apple-touch-icon" href="images/icon72.png" sizes="72x72">
+		<link rel="apple-touch-icon" href="images/icon32.png" sizes="32x32">
+		<link rel="apple-touch-icon" href="images/icon200.png" sizes="200x200">
 		<link rel="apple-touch-icon-precomposed" sizes="android-only" href="images/icon57.png">
 	</head>
 	<body>
+
+
+		<!-- **** авторизация **** -->
+		<div data-role="page" id="authorization">
+			<div data-role="header">
+				<h1>PINOK</h1>
+			</div>
+			<div data-role="content">
+				форма для авторизации
+			</div>
+			<div data-role="footer" data-position="fixed" data-id="toolbar">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#create_task" data-icon="grid" data-transition="fade">Создать задачу</a></li>
+						<li><a href="#task_list" data-icon="info" data-transition="fade">Список задач</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- ****создание задачи **** -->
+		<div data-role="page" id="create_task">
+			<div data-role="header">
+				<h1>PINOK</h1>
+				<a href=' javascript: refresh (); ' data-icon="refresh" id="refresh" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
+			</div>
+			<div data-role="content">
+				форма для создания задач
+			</div>
+			<div data-role="footer" data-position="fixed" data-id="toolbar">
+				<div data-role="navbar">
+					<ul>
+						<li><a class="ui-Ьtn-active" href="#create_task" data-icon="edit" data-transition="fade">Создать задачу</a></li>
+						<li><a href="#task_list" data-icon="bullets" data-transition="fade">Список задач</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
+		<!-- **** список задач **** -->
+		<div data-role="page" id="task_list">
+			<div data-role="header">
+				<h1>PINOK</h1>
+				<a href=' javascript: refresh (); ' data-icon="refresh" id="refresh" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
+			</div>
+			<div data-role="content">
+				список задач
+			</div>
+			<div data-role="footer" data-position="fixed" data-id="toolbar">
+				<div data-role="navbar">
+					<ul>
+						<li><a href="#create_task" data-icon="edit" data-transition="fade">Создать задачу</a></li>
+						<li><a class="ui-Ьtn-active" href="#task_list" data-icon="bullets" data-transition="fade">Список задач</a></li>
+					</ul>
+				</div>
+			</div>
+		</div>
+
+
 	</body>
 </html>
