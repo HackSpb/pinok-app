@@ -1,16 +1,21 @@
 var data;
 
-$(document).Ьind("moЬileinit", function() {
-	if (navigator.platform=="iPhone" || navigator.platform=="iPad" || navigator.platform=="iPod" 11 navigator.platform=="iPad" || navigator. platform="iPhone Sirnulator") {
+$(document).on( "pagebeforechange", "#task_list", function( event ) {
+  $(".tassk").html("Ваше устройство не поддерживает это приложение. Для функционирования приложения установите API LocalStorage");
+});
+
+/*$(document).bind("mobileinit", function() {
+	if (navigator.platform == "iPhone" || navigator.platform == "iPad" || navigator.platform == "iPod" || navigator.platform == "iPad" || navigator.platform == "iPhone Sirnulator") {
 		//Устройство работает под управлением iOS, и мы проверим,
 		//находится ли приложение в автономном режиме
 		if (!navigator.standalone) {
 			showIOSinvitation();
 		}
 	}
+});
 
-	/*Мы перехватываем загрузку страницы sessions проверяем динамические данные о заседании*/
-	$("#sessions").live("pageshow", function() {
+	Мы перехватываем загрузку страницы sessions проверяем динамические данные о заседании
+	$("body").on("pageshow", "#sessions", function() {
 		if (window.localStorage!=undefined) {
 			// Интерфейс НТМL5 Local Storage доступен
 			if (window.localStorage.getItem("data") != undefined && window.localStorage.getItem("data") != null) {
@@ -30,9 +35,8 @@ $(document).Ьind("moЬileinit", function() {
 		}
 		loadSessionsAjax();
 	});
-});
 
-
+*/
 function showIOSinvitation() {
 	setTimeout(function() {
 		//Скрываем информацию о сохранении, пока не загрузится все приложение
@@ -187,9 +191,7 @@ function showDetails(index) {
 
 
 function refresh() {
-	$("#console").html("Verifying ...");
-	// Вьmолняется проверка ...
-	loadSessionsAjax();
+	confirm("There is an update in the schedule available, do уои want to load it now?");
 }
 
 
@@ -197,3 +199,24 @@ function openWithoutInstallation() {
 	//Удаляем псевдодиалоговую страницу по установке
 	$.moblle.changePage($("#home"), {transition: "slideup", reverse: true}); 
 }
+/*
+function exam_autorizathion () {
+	if (/*соединение с интернетом есть) {
+		if (window.localStorage!=undefined) {
+			if (window.localStorage.getItem("reg_key") != undefined && window.localStorage.getItem("reg_key") != null) {
+				//ключ имеется, надо проверить его актуальность
+				if (/*ключ актуален) {
+					//обновление хранилища
+				} else {
+					//нужна авторизация
+				}
+			} else {
+				//ключа нет, однозначно нужна авторизация
+			}
+		} else {
+			$ ("#console").html ("Ваше устройство не поддерживает это приложение. Для функционирования приложения установите API LocalStorage");
+		}
+	} else {
+
+	}
+}*/
