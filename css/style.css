@@ -30,3 +30,7 @@ display: blосk;
 [data-role=navbar] .ui-btn-text {
 font-size: smaller;
 }
+
+a {
+	text-decoration: none;
+}

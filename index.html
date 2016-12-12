@@ -1,5 +1,5 @@
 <!DOCTYPE html>
-<html manifest="manifest.appcache">
+<html manifest="/manifest.appcache">
 	<head>
 		<meta charset="utf-8" />
 		<title>PINOK</title>
@@ -32,9 +32,16 @@
 		<div data-role="page" id="authorization">
 			<div data-role="header">
 				<h1>PINOK</h1>
+				<a href='javascript: refresh ();' data-icon="refresh" id="refresh" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
 			</div>
-			<div data-role="content">
-				форма для авторизации
+			<div data-role="content" id="form_auth">
+				<form data-transition="none">
+							<label for="email">Email:</label>
+							<input type="email" name="email" id="email" value="" required='required' />
+							<label for="password">Пароль:</label>
+							<input type="password" name="password" id="password" value="" required="required" /><br>
+							<a href='javascript: autorizathion ();'><input type="button" value="Вход" data-therne="a" /></a>
+					</form>
 			</div>
 		</div>
 
@@ -55,28 +62,7 @@
 					<h1>PINOK</h1>
 				</div>
 				<div data-role="content">
-					<form action="feedЬack.php" method="post" data-transition="none">
-						<div data-role="fieldcontain">
-							<label for="name">Имя:</label>
-							<input type="text" name="name" id="name" value="" required='required' />
-						</div>
-						<div data-role="fieldcontain">
-							<label for="email">Email:</label>
-							<input type="email" name="email" id="email" value="" required="required" />
-						</div>
-						<div data-role="fieldcontain">
-							<label for="comments">Comments:</label>
-							<textarea cols="40" rows="8" name="comments" id="comments"></textarea>
-						</div>
-						<div data-role="fieldcontain">
-							<label for="contacted">Can we contact you?</label>
-							<select name="contacted" id="contacted" data-role="slider">
-								<option value="no">No</option>
-								<option value="yes">Yes</option>
-							</select>
-						</div>
-						<input type="suЬmit" value="Send" data-therne="a" />
-					</form>
+					Создай себе тут задачу
 				</div>
 			</div>
 

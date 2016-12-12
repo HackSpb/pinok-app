@@ -1,7 +1,28 @@
 var data;
+$(document).bind("pageshow", function() {
+	if(window.localStorage != undefined) {
+		if(window.localStorage.getItem("key_auth") != undefined && window.localStorage.getItem ("key_auth") != null) {
+			$.mobile.changePage('#task_list', "slide");
+		} else {
+			$.ajax({
+		 		url: 'http://pinok.dh/app/exam/connect/site',
+				dataType: 'jsonp',
+		 		type: 'GET',
 
-$(document).on( "pagebeforechange", "#task_list", function( event ) {
-  $(".tassk").html("Ваше устройство не поддерживает это приложение. Для функционирования приложения установите API LocalStorage");
+		 		success: function(data) {
+					if(data['status'] === 'ok') {
+						$.mobile.changePage('#authorization', "slide");
+					}
+				},
+		 
+				error: function(data) {
+					alert('Интернета сейчас нет, давайте подождем.');
+				}
+			});
+		}
+	} else {
+		$("#form_auth").html('<center><h2>Данное устройство не поддерживает это приложение. Для нормального функционирования необходим API Storage.</h2></center>');
+	}
 });
 
 /*$(document).bind("mobileinit", function() {
@@ -191,7 +212,8 @@ function showDetails(index) {
 
 
 function refresh() {
-	confirm("There is an update in the schedule available, do уои want to load it now?");
+	//confirm("There is an update in the schedule available, do уои want to load it now?");
+	$.mobile.changePage('#task_list', "slide");
 }
 
 
@@ -199,24 +221,23 @@ function openWithoutInstallation() {
 	//Удаляем псевдодиалоговую страницу по установке
 	$.moblle.changePage($("#home"), {transition: "slideup", reverse: true}); 
 }
-/*
-function exam_autorizathion () {
-	if (/*соединение с интернетом есть) {
-		if (window.localStorage!=undefined) {
-			if (window.localStorage.getItem("reg_key") != undefined && window.localStorage.getItem("reg_key") != null) {
-				//ключ имеется, надо проверить его актуальность
-				if (/*ключ актуален) {
-					//обновление хранилища
-				} else {
-					//нужна авторизация
-				}
-			} else {
-				//ключа нет, однозначно нужна авторизация
-			}
-		} else {
-			$ ("#console").html ("Ваше устройство не поддерживает это приложение. Для функционирования приложения установите API LocalStorage");
-		}
-	} else {
 
-	}
-}*/
+function autorizathion () {
+	var user_email = $('input[name =\'email\']').val();
+	var user_password = $('input[name =\'password\']').val();
+	$.ajax({
+		url: 'http://pinok.dh/app/authorization/site',
+		dataType: 'jsonp',
+		type: 'GET',
+		data: { 'user_email' : user_email, 'user_password' : user_password },
+		success: function(data) {
+			if(data['status'] === 'ok') {
+				alert('Oh yeah!');
+			}
+		},
+		 
+		error: function(data) {
+			alert('Oh crap!'); 
+			}
+		});
+}
