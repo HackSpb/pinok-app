@@ -1,16 +1,16 @@
 var data;
 $(document).bind("pageshow", function() {
 	if(window.localStorage != undefined) {
-		if(window.localStorage.getItem("key_auth") != undefined && window.localStorage.getItem ("key_auth") != null) {
-			$.mobile.changePage('#task_list', "slide");
+		if(window.localStorage.getItem("key_auth") != undefined && window.localStorage.getItem("key_auth") != null) {
+			//$.mobile.changePage('#task_list', "slide");
 		} else {
 			$.ajax({
-		 		url: 'http://pinok.dh/app/exam/connect/site',
+		 		url: 'http://pinok.dh/app/exam/connect',
 				dataType: 'jsonp',
 		 		type: 'GET',
 
 		 		success: function(data) {
-					if(data['status'] === 'ok') {
+					if(data['status'] == 11) {
 						$.mobile.changePage('#authorization', "slide");
 					}
 				},
@@ -24,6 +24,107 @@ $(document).bind("pageshow", function() {
 		$("#form_auth").html('<center><h2>Данное устройство не поддерживает это приложение. Для нормального функционирования необходим API Storage.</h2></center>');
 	}
 });
+
+
+function autorizathion () {
+	var user_email = $('input[name =\'email\']').val();
+	var user_password = $('input[name =\'password\']').val();
+	$.ajax({
+		url: 'http://pinok.dh/app/authorization/site',
+		dataType: 'jsonp',
+		type: 'GET',
+		data: { 'user_email' : user_email, 'user_password' : user_password },
+		success: function(data) {
+			if(data['status'] == 11) {
+				window.localStorage.setItem('key_auth', data['auth_key']);
+				window.localStorage.setItem('user_information', data['result']);
+				$.mobile.changePage('#task_list', "slide");
+			}
+			if(data['status'] == 33 || data['status'] == 34) {
+				alert('Введены неверные данные, попробуйте еще раз');
+			}
+		},
+		 
+		error: function(data) {
+				alert('Интернета сейчас нет, давайте подождем.');
+		}
+	});
+}
+
+$(document).on("pageshow", "#authorization", function() {
+	if(window.localStorage != undefined) {
+		if(window.localStorage.getItem("key_auth") != undefined && window.localStorage.getItem("key_auth") != null) {
+			$.mobile.changePage('#task_list', "slide");
+		}
+	}
+});
+
+$(document).on("pageshow", "#task_list", function() {
+	if(window.localStorage != undefined) {
+		if(window.localStorage.getItem("key_auth") != undefined && window.localStorage.getItem("key_auth") != null) {
+			load_tasks();
+		} else {
+			$.mobile.changePage('#authorization', "slide");
+		}
+	} else {
+		$("#tasks").html('<center><h2>Данное устройство не поддерживает это приложение. Для нормального функционирования необходим API Storage.</h2></center>');
+	}
+});
+
+function load_tasks() {
+	var key_auth = window.localStorage.getItem('key_auth');
+	$.ajax({
+		url: 'http://pinok.dh/app/upload/task',
+		dataType: 'jsonp',
+		type: 'GET',
+		data: { 'key_auth' : key_auth },
+		success: function(data) {
+			if(data['status'] == 11) {
+				window.localStorage.removeItem('tasks_storage');
+				window.localStorage.setItem('tasks_storage', JSON.stringify(data.result));
+			}
+			if(data['status'] == 34) {
+				alert('Введены неверные данные, попробуйте еще раз');
+			}
+		},
+		 
+		error: function(data) {
+			alert('Интернета сейчас нет, давайте подождем.');
+		}
+	});
+	show_tasks();
+}
+
+function show_tasks() {
+	if(window.localStorage != undefined) {
+		if(window.localStorage.getItem("tasks_storage") != undefined && window.localStorage.getItem("tasks_storage") != null) {
+			$("#tasks").html ("");
+			var html = "";
+			var data = JSON.parse(window.localStorage.getItem("tasks_storage"));
+			console.log(data);
+			for (var i=0; i<40; i++) {
+				html += "<li><a href='javascript:showDetails(" + i + ") '>" + data['number_'+i]['t_short_name'] + "</a></li>";
+			}
+
+			$ ("#tasks").html(html);
+		} else {
+			$("#tasks").html('<center><h2>У Вас еще не создано ни одной задачи.</h2></center>');
+		}
+	} else {
+		$("#tasks").html('<center><h2>Данное устройство не поддерживает это приложение. Для нормального функционирования необходим API Storage.</h2></center>');
+	}
+}
+
+function refresh() {
+	load_tasks();
+}
+
+
+
+
+
+
+
 
 /*$(document).bind("mobileinit", function() {
 	if (navigator.platform == "iPhone" || navigator.platform == "iPad" || navigator.platform == "iPod" || navigator.platform == "iPad" || navigator.platform == "iPhone Sirnulator") {
@@ -57,7 +158,7 @@ $(document).bind("pageshow", function() {
 		loadSessionsAjax();
 	});
 
-*/
+
 function showIOSinvitation() {
 	setTimeout(function() {
 		//Скрываем информацию о сохранении, пока не загрузится все приложение
@@ -222,22 +323,4 @@ function openWithoutInstallation() {
 	$.moblle.changePage($("#home"), {transition: "slideup", reverse: true}); 
 }
 
-function autorizathion () {
-	var user_email = $('input[name =\'email\']').val();
-	var user_password = $('input[name =\'password\']').val();
-	$.ajax({
-		url: 'http://pinok.dh/app/authorization/site',
-		dataType: 'jsonp',
-		type: 'GET',
-		data: { 'user_email' : user_email, 'user_password' : user_password },
-		success: function(data) {
-			if(data['status'] === 'ok') {
-				alert('Oh yeah!');
-			}
-		},
-		 
-		error: function(data) {
-			alert('Oh crap!'); 
-			}
-		});
-}
+*/

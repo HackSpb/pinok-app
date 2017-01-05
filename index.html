@@ -32,7 +32,6 @@
 		<div data-role="page" id="authorization">
 			<div data-role="header">
 				<h1>PINOK</h1>
-				<a href='javascript: refresh ();' data-icon="refresh" id="refresh" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content" id="form_auth">
 				<form data-transition="none">
@@ -53,8 +52,7 @@
 				<a href="#create_task" data-icon="edit" id="create" data-theme="c" data-rel="dialog" data-transition="flip" data-iconpos="notext" class="ui-btn-right"></a>
 			</div>
 			<div data-role="content">
-			<div class="tassk"></div>
-				список задач
+				<ul id="tasks">список задач</ul>
 			</div>
 		</div>
 		<div data-role="dialog" id="create_task">
