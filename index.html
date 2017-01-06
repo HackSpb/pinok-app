@@ -48,22 +48,51 @@
 		<div data-role="page" id="task_list">
 			<div data-role="header">
 				<h1>PINOK</h1>
-				<a href='javascript: refresh ();' data-icon="refresh" id="refresh" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
-				<a href="#create_task" data-icon="edit" id="create" data-theme="c" data-rel="dialog" data-transition="flip" data-iconpos="notext" class="ui-btn-right"></a>
+				<a href='javascript: load_tasks ();' data-icon="refresh" id="refresh" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
+				<a href="#settings" data-icon="gear" id="settings" data-theme="c" class="ui-btn-right" data-iconpos="notext"></a>
 			</div>
 			<div data-role="content">
-				<ul id="tasks">список задач</ul>
+				<ul data-role="listview" data-inset="true" id="tasks">Загрузка задач...</ul>
 			</div>
 		</div>
-		<div data-role="dialog" id="create_task">
-				<div data-role="header">
-					<h1>PINOK</h1>
-				</div>
-				<div data-role="content">
-					Создай себе тут задачу
-				</div>
-			</div>
 
+		<!-- **** подробности об одной задачи **** -->
+		<div data-role="page" id="details">
+			<div data-role="header">
+				<h1>PINOK</h1>
+				<a href="#task_list" data-icon="arrow-l" id="arrow-l" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
+				<a href="#settings" data-icon="gear" id="settings" data-theme="c" class="ui-btn-right" data-iconpos="notext"></a>
+			</div>
+			<div data-role="content">
+				<div id="task_details">Загрузка информации...</div>
+			</div>
+		</div>
+
+		<!-- **** настройки **** -->
+		<div data-role="page" id="settings">
+			<div data-role="header">
+				<h1>PINOK</h1>
+				<a href="#task_list" data-icon="arrow-l" id="arrow-l" data-theme="c" class="ui-btn-left" data-iconpos="notext"></a>
+			</div>
+			<div data-role="content">
+				<ul data-role="listview" data-inset="true" id="tasks">
+					<li data-icon="edit"><a href="#create_task" id="create" data-theme="c" data-rel="dialog">Создать задачу</a></li>
+					<li data-icon="action"><a href='javascript: logout ();' id="logout" data-theme="c">Выход</a></li>
+				</ul>
+			</div>
+		</div>
+
+		<!-- **** создать задачу **** -->
+		<div data-role="dialog" id="create_task">
+			<div data-role="header">
+				<h1>PINOK</h1>
+			</div>
+			<div data-role="content">
+				Создай себе тут задачу
+			</div>
+		</div>
+
+		<div id="left_menu_content" style="display: none; height: 100%; width: 30%; background: red;">kokokok</div>
 
 	</body>
 </html>

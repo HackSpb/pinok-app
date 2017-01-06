@@ -1,9 +1,7 @@
 var data;
 $(document).bind("pageshow", function() {
 	if(window.localStorage != undefined) {
-		if(window.localStorage.getItem("key_auth") != undefined && window.localStorage.getItem("key_auth") != null) {
-			//$.mobile.changePage('#task_list', "slide");
-		} else {
+		if(window.localStorage.getItem("key_auth") == undefined && window.localStorage.getItem("key_auth") == null) {
 			$.ajax({
 		 		url: 'http://pinok.dh/app/exam/connect',
 				dataType: 'jsonp',
@@ -80,8 +78,8 @@ function load_tasks() {
 		data: { 'key_auth' : key_auth },
 		success: function(data) {
 			if(data['status'] == 11) {
-				window.localStorage.removeItem('tasks_storage');
 				window.localStorage.setItem('tasks_storage', JSON.stringify(data.result));
+				show_tasks();
 			}
 			if(data['status'] == 34) {
 				alert('Введены неверные данные, попробуйте еще раз');
@@ -89,10 +87,11 @@ function load_tasks() {
 		},
 		 
 		error: function(data) {
-			alert('Интернета сейчас нет, давайте подождем.');
+			alert('Интернет соединение разорвано. Данные могут быть не актуальными');
+			show_tasks();
 		}
 	});
-	show_tasks();
+	
 }
 
 function show_tasks() {
@@ -102,11 +101,11 @@ function show_tasks() {
 			var html = "";
 			var data = JSON.parse(window.localStorage.getItem("tasks_storage"));
 			console.log(data);
-			for (var i=0; i<40; i++) {
-				html += "<li><a href='javascript:showDetails(" + i + ") '>" + data['number_'+i]['t_short_name'] + "</a></li>";
+			for (var i=0; i<data.length; i++) {
+				html += "<li><a href='javascript:show_details(" + data[i]['t_id'] + ") '>" + data[i]['t_short_name'] + "</a></li>";
 			}
-
-			$ ("#tasks").html(html);
+			$("#tasks").append(html);
+			$('#tasks').listview('refresh');
 		} else {
 			$("#tasks").html('<center><h2>У Вас еще не создано ни одной задачи.</h2></center>');
 		}
@@ -115,16 +114,25 @@ function show_tasks() {
 	}
 }
 
-function refresh() {
-	load_tasks();
+function show_details(task_id) {
+	var data = JSON.parse(window.localStorage.getItem("tasks_storage"));
+	var html = "";
+	for (var i=0; i<data.length; i++) {
+		if (data[i]['t_id'] == task_id) {
+			html = "<div><hЗ>" + data[i]['t_name'] + "</hЗ><h4>Описание: " + data[i]['t_description'] + "</h4><h5>Начало: " + data[i]['t_date_create'] + "</h5><h5>Конец: " + data[i]['t_date_finish'] + "</h5>";
+		}
+	}
+	$("#task_details").html(html);
+	$.mobile.changePage($("#details"));
 }
 
-
-
-
-
-
-
+function logout() {
+	var html = "";
+	$("#tasks").html(html);
+	$("#task_details").html(html);
+	window.localStorage.clear();
+	$.mobile.changePage($("#authorization"));
+}
 
 /*$(document).bind("mobileinit", function() {
 	if (navigator.platform == "iPhone" || navigator.platform == "iPad" || navigator.platform == "iPod" || navigator.platform == "iPad" || navigator.platform == "iPhone Sirnulator") {
