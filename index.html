@@ -88,11 +88,31 @@
 				<h1>PINOK</h1>
 			</div>
 			<div data-role="content">
-				Создай себе тут задачу
+				<form id="create_task_form">
+					<fieldset>
+						<legend>Название:</legend>
+						<input type="text" name="task_name" id="task_name" required>
+					</fieldset>
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+					    <legend>Задача для тебя или другого человека?</legend>
+					    <input name="radio-choice-owner" id="radio-choice-owner_a" value="1" checked type="radio" onclick="task_for_user();" >
+					    <label for="radio-choice-owner_a">Для тебя</label>
+					    <input name="radio-choice-owner" id="radio-choice-owner_h" value="2" type="radio" onclick="task_for_user();">
+					    <label for="radio-choice-owner_h">Для другого</label>
+					    <div id="input_for_email"></div>
+					</fieldset>
+					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
+					    <legend>Установить срок выполнения?</legend>
+					    <input name="radio-choice-date" id="radio-choice-date_d" value="2" checked type="radio" onclick="date_for_task();">
+					    <label for="radio-choice-date_d">Нет</label>
+					    <input name="radio-choice-date" id="radio-choice-date_c" value="1" type="radio" onclick="date_for_task();">
+					    <label for="radio-choice-date_c">Да</label>
+					    <div id="input_for_date"></div>
+					</fieldset>
+					<input type="button" onclick="create_task_form_app();" value="Создать">
+				</form>
 			</div>
 		</div>
-
-		<div id="left_menu_content" style="display: none; height: 100%; width: 30%; background: red;">kokokok</div>
 
 	</body>
 </html>
