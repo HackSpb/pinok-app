@@ -93,6 +93,15 @@
 						<legend>Название:</legend>
 						<input type="text" name="task_name" id="task_name" required>
 					</fieldset>
+					<label for="select-choice-stars_r" class="select">Важность задачи:</label>
+					<select name="select-choice-stars" id="select-choice-stars_r" data-native-menu="false">
+					    <option value="0">Неважная задача</option>
+					    <option value="1">Слегка важная задача</option>
+					    <option value="2">Не очень важная задача</option>
+					    <option value="3">Весьма важная задача</option>
+					    <option value="4">Очень важная задача</option>
+					    <option value="5">Крайне очень срочная задача</option>
+					</select>
 					<fieldset data-role="controlgroup" data-type="horizontal" data-mini="true">
 					    <legend>Задача для тебя или другого человека?</legend>
 					    <input name="radio-choice-owner" id="radio-choice-owner_a" value="1" checked type="radio" onclick="task_for_user();" >

@@ -119,7 +119,13 @@ function show_details(task_id) {
 	var html = "";
 	for (var i=0; i<data.length; i++) {
 		if (data[i]['t_id'] == task_id) {
-			html = "<div><hЗ>" + data[i]['t_name'] + "</hЗ><h4>Описание: " + data[i]['t_description'] + "</h4><h5>Начало: " + data[i]['t_date_create'] + "</h5><h5>Конец: " + data[i]['t_date_finish'] + "</h5>";
+			if (data[i]['t_raiting'] == 0) var rait = 'Неважная задача';
+			if (data[i]['t_raiting'] == 1) var rait = 'Слегка важная задача';
+			if (data[i]['t_raiting'] == 2) var rait = 'Не очень важная задача';
+			if (data[i]['t_raiting'] == 3) var rait = 'Весьма важная задача';
+			if (data[i]['t_raiting'] == 4) var rait = 'Очень важная задача';
+			if (data[i]['t_raiting'] == 5) var rait = 'Крайне очень срочная задача';
+			html = "<div><hЗ>" + data[i]['t_name'] + "</hЗ><h4>Описание: " + data[i]['t_description'] + "</h4><h4>Рейтинг: " + rait + "</h4><h5>Начало: " + data[i]['t_date_create'] + "</h5><h5>Конец: " + data[i]['t_date_finish'] + "</h5>";
 		}
 	}
 	$("#task_details").html(html);
@@ -165,11 +171,14 @@ function date_for_task() {
 
 	  	$('#input_for_date').append('<select name="task_deadline_month" id="task_deadline_month" data-native-menu="false"></select>');
 	  	var arr = ["Январь", "Февраль", "Март", "Апрель", "Май", "Июнь", "Июль", "Август", "Сентябрь", "Октябрь", "Ноябрь", "Декабрь"];
+	  	var n;
 		arr.forEach(function(item, i, arr) {
 			if (i == month) {
-	  			$('#task_deadline_month').append('<option selected value="'+i+'">'+item+'</option>');
+				n=i+1;
+	  			$('#task_deadline_month').append('<option selected value="'+n+'">'+item+'</option>');
 	  		} else {
-	  			$('#task_deadline_month').append('<option value="'+i+'">'+item+'</option>');
+	  			n=i+1;
+	  			$('#task_deadline_month').append('<option value="'+n+'">'+item+'</option>');
 	  		}
 		});
 
@@ -206,19 +215,31 @@ function create_task_form_app() {
 	var task_deadline_day = $('#task_deadline_day').val();
 	var task_deadline_hour = $('#task_deadline_hour').val();
 
+	var task_raiting = $('#select-choice-stars_r').val();
+
 	var key_auth = window.localStorage.getItem('key_auth');
 	$.ajax({
 		url: 'http://pinok.dh/app/import/task',
 		dataType: 'jsonp',
 		type: 'GET',
-		data: { 'task_name' : task_name, 'task_for' : task_for, 'email_friend' : email_friend, 'task_deadline_turn' : task_deadline_turn,  'task_deadline_year' : task_deadline_year, 'task_deadline_month' : task_deadline_month, 'task_deadline_day' : task_deadline_day, 'task_deadline_hour' : task_deadline_hour, 'task_type' : 62, 'key_auth' : key_auth },
+		data: { 'task_name' : task_name, 'task_for' : task_for, 'email_friend' : email_friend, 'task_deadline_turn' : task_deadline_turn,  'task_deadline_year' : task_deadline_year, 'task_deadline_month' : task_deadline_month, 'task_deadline_day' : task_deadline_day, 'task_deadline_hour' : task_deadline_hour, 'task_type' : 62, 'task_raiting' : task_raiting, 'key_auth' : key_auth },
 		success: function(data) {
-			if(data.status == 11){
+			if(data.status == 12){
 				alert('Задача успешно создана');
 				$('#create_task_form')[0].reset();
 				$("#input_for_email").html('');
 				$("#input_for_date").html('');
 				$.mobile.changePage($("#task_list"));
+			}
+			if(data.status == 13){
+				alert('Задача успешно создана для: ' + data.result.user_name + ' под названием: "' + data.result.task_name + '"');
+				$('#create_task_form')[0].reset();
+				$("#input_for_email").html('');
+				$("#input_for_date").html('');
+				$.mobile.changePage($("#task_list"));
+			}
+			if(data.status == 36){
+				alert('Сегодня ты создал уже ' + data.result.count_data + ' задач. Чтобы создать задачу "' + data.result.task_name + '" для '+ data.result.user_name + ' надо подождать еще ' + data.result.times_waiting + '. Сегодня ты создал задачи: ' + data.result.last_task_1 + ', ' + data.result.last_task_2 + ', ' + data.result.last_task_3 + ', ' + data.result.last_task_4 + ', ' + data.result.last_task_5 + '.');
 			}
 			if(data.status == 33){
 				alert('Авторизация устарела. Авторизуйтесь снова.');
@@ -232,5 +253,5 @@ function create_task_form_app() {
 		error: function(data) {
 			alert('Интернет соединение разорвано. Попробуйте позже.');
 		}
-	});	
+	});
 }
