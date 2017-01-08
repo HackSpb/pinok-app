@@ -3,7 +3,7 @@ $(document).bind("pageshow", function() {
 	if(window.localStorage != undefined) {
 		if(window.localStorage.getItem("key_auth") == undefined && window.localStorage.getItem("key_auth") == null) {
 			$.ajax({
-		 		url: 'http://pinok.dh/app/exam/connect',
+		 		url: 'http://pinok.org/app/exam/connect',
 				dataType: 'jsonp',
 		 		type: 'GET',
 
@@ -28,7 +28,7 @@ function autorizathion () {
 	var user_email = $('input[name =\'email\']').val();
 	var user_password = $('input[name =\'password\']').val();
 	$.ajax({
-		url: 'http://pinok.dh/app/authorization/site',
+		url: 'http://pinok.org/app/authorization/site',
 		dataType: 'jsonp',
 		type: 'GET',
 		data: { 'user_email' : user_email, 'user_password' : user_password },
@@ -72,7 +72,7 @@ $(document).on("pageshow", "#task_list", function() {
 function load_tasks() {
 	var key_auth = window.localStorage.getItem('key_auth');
 	$.ajax({
-		url: 'http://pinok.dh/app/upload/task',
+		url: 'http://pinok.org/app/upload/task',
 		dataType: 'jsonp',
 		type: 'GET',
 		data: { 'key_auth' : key_auth },
@@ -219,7 +219,7 @@ function create_task_form_app() {
 
 	var key_auth = window.localStorage.getItem('key_auth');
 	$.ajax({
-		url: 'http://pinok.dh/app/import/task',
+		url: 'http://pinok.org/app/import/task',
 		dataType: 'jsonp',
 		type: 'GET',
 		data: { 'task_name' : task_name, 'task_for' : task_for, 'email_friend' : email_friend, 'task_deadline_turn' : task_deadline_turn,  'task_deadline_year' : task_deadline_year, 'task_deadline_month' : task_deadline_month, 'task_deadline_day' : task_deadline_day, 'task_deadline_hour' : task_deadline_hour, 'task_type' : 62, 'task_raiting' : task_raiting, 'key_auth' : key_auth },

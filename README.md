@@ -1,2 +1,2 @@
 # pinok-app
-# by jq-mobile
+by jq-mobile
